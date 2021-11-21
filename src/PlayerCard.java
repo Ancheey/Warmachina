@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class PlayerCard {
 
@@ -19,6 +21,12 @@ public abstract class PlayerCard {
         BonusPhysicalDamage, //Bonus damage dealt by a weapon swing
         BonusMagicDamage, //Bonus damage dealt by magic effects and abilities
         BonusRangedDamage, //Bonus damage dealt by a ranged attack
+
+    }
+    public static final Map<Statistics, Float> StatWeights = new HashMap<>();
+    static{
+        StatWeights.put(Statistics.Vitality, 1f);
+        //TODO: Init the rest of stat weights
 
     }
 }
