@@ -55,6 +55,19 @@ public abstract class ItemTemplate {
             default -> ChatColor.WHITE + _name;
         };
     }
+    public String[] GetBaseDescription(){
+        //Todo: Add the upper part of description here (Armor, damage, speed, name, level)
+        return null;
+    }
+    public String[] GetBaseStatsDescription(){
+        //Todo: Add the middle part of description (Vitality, Power and such)
+        return null;
+    }
+    public String[] GetSecondaryStatsDescription(){
+        //Todo: Add the bottom part of the description (Secondary stats)
+        return null;
+    }
+
     public Rarity GetRarity(){
         return _rarity;
     }
