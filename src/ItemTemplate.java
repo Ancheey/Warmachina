@@ -1,6 +1,8 @@
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -18,10 +20,10 @@ public abstract class ItemTemplate {
 
     Map<PlayerCard.Statistics, Integer> _Stats = new HashMap<>();
 
-    abstract void onUse(); //Called when right clicked with the item in hand - designed for off-hands
-    abstract void onHit(); //Called when the weapon/projectile hits the target
-    abstract void onSwing(); //Called when the weapon is swung or shot
-    abstract void onStruck(); //Called when the owner of the item (must be equipped) is hit (Called before onHit() )
+    abstract void onUse(PlayerInteractEvent e); //Called when right clicked with the item in hand - designed for off-hands
+    abstract void onHit(EntityDamageByEntityEvent e); //Called when the weapon/projectile hits the target
+    abstract void onSwing(PlayerInteractEvent e); //Called when the weapon is swung or shot
+    abstract void onStruck(EntityDamageByEntityEvent e); //Called when the owner of the item (must be equipped) is hit (Called before onHit() )
 
     public enum Rarity{
         Common,

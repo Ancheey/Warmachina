@@ -1,0 +1,20 @@
+Stat calculation:
+
+Item level = ilvl
+Score = ilvl * 10
+
+Either random or not split the score into pieces
+
+VitalityScore = Score / x
+LeftoverScore = Score - VitalityScore;
+
+Stat = VitalityScore / VitalityWeight
+
+if Stat % 1 > 0.5, round to upper
+
+Armor is always calculated from the entire score.
+if bonus armor is selected on an armor piece or a shield, it also is calculated from the entire score and added to armor without subtracting from the overall available score
+if item is a shield, same goes for block value
+
+
+Chances = (1 / Max(Level - 10, 1)) * Stat (0.05% per point at level 30)

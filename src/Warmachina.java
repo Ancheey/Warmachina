@@ -13,7 +13,7 @@ public class Warmachina extends JavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-
+        getServer().getPluginManager().registerEvents(new CombatEvents(), this);
     }
 
     @Override
