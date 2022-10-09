@@ -44,18 +44,14 @@ public abstract class WMItem implements INameHandler {
         Gem
     }
 
-<<<<<<< Updated upstream:src/ItemTemplate.java
-    public ItemTemplate(int ID, Material base, EquipmentSlot slot, String name, Rarity rarity, int score, Map<PlayerCard.Statistics, Integer> stats){
-=======
-    public WMItem(int ID, Material base, String name, Rarity rarity, Map<PlayerCard.Statistics, Integer> stats){
->>>>>>> Stashed changes:src/WMItem.java
+    public WMItem(int ID, Material base, EquipmentSlot slot, String name, Rarity rarity, int score, Map<PlayerCard.Statistics, Integer> stats){
         _itemID = ID;
-        _score = score;
         _base = base;
+        _score = score;
         _name = name;
         _rarity = rarity;
-        _Stats.putAll(stats);
         _slot = slot;
+        _Stats.putAll(stats);
 
         if(slot == EquipmentSlot.Main && !_Stats.containsKey(PlayerCard.Statistics.AttackSpeed)){//it's a weapon and it didn't have it's weapon speed set
             _Stats.put(PlayerCard.Statistics.AttackSpeed, 1); //One strike per second
@@ -78,33 +74,26 @@ public abstract class WMItem implements INameHandler {
             default -> ChatColor.WHITE + _name;
         };
     }
-<<<<<<< Updated upstream:src/ItemTemplate.java
-    public String[] GetBaseDescription(){
+    public String[] GetBaseDescription() {
         //Todo: Add the upper part of description here (Armor, damage, speed, level)
         List<String> ret = new ArrayList<>();
 
-        if(_score != 0){
+        if (_score != 0) {
             ret.add(ChatColor.YELLOW + "Gear Score: " + _score);
         }
-        if(_slot == EquipmentSlot.Main){
+        if (_slot == EquipmentSlot.Main) {
             int val = GetStatValue(PlayerCard.Statistics.DamageDiceValue);
-            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount)) * val  + ", " + GetStatValue(PlayerCard.Statistics.AttackSpeed) + " swings per second");
-            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount) / 2 + val ) * GetStatValue(PlayerCard.Statistics.AttackSpeed) + " damage per second)" );
-        }
-        else if(_slot == EquipmentSlot.Ranged){
+            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount)) * val + ", " + GetStatValue(PlayerCard.Statistics.AttackSpeed) + " swings per second");
+            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount) / 2 + val) * GetStatValue(PlayerCard.Statistics.AttackSpeed) + " damage per second)");
+        } else if (_slot == EquipmentSlot.Ranged) {
             int val = GetStatValue(PlayerCard.Statistics.DamageDiceValue);
-            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount)) * val );
-            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount) / 2 + val ) + " damage per shot)" );
+            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount)) * val);
+            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount) / 2 + val) + " damage per shot)");
         }
         //TODO: Finish this for shields, off hands, gear and other items
 
 
-        return (String[])ret.toArray();
-=======
-    private String[] GetBaseDescription(){
-        //Todo: Add the upper part of description here (Armor, damage, speed, name, level)
-        return null;
->>>>>>> Stashed changes:src/WMItem.java
+        return (String[]) ret.toArray();
     }
     private String[] GetBaseStatsDescription(){
         //Todo: Add the middle part of description (Vitality, Power and such)
