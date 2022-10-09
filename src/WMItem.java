@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ItemTemplate {
+public abstract class WMItem implements INameHandler {
     
     int _itemID;
 
@@ -44,7 +44,11 @@ public abstract class ItemTemplate {
         Gem
     }
 
+<<<<<<< Updated upstream:src/ItemTemplate.java
     public ItemTemplate(int ID, Material base, EquipmentSlot slot, String name, Rarity rarity, int score, Map<PlayerCard.Statistics, Integer> stats){
+=======
+    public WMItem(int ID, Material base, String name, Rarity rarity, Map<PlayerCard.Statistics, Integer> stats){
+>>>>>>> Stashed changes:src/WMItem.java
         _itemID = ID;
         _score = score;
         _base = base;
@@ -58,7 +62,7 @@ public abstract class ItemTemplate {
         }
 
     }
-    public ItemTemplate(int ID, Material base, String name, Rarity rarity){
+    public WMItem(int ID, Material base, String name, Rarity rarity){
         _itemID = ID;
         _base = base;
         _name = name;
@@ -74,6 +78,7 @@ public abstract class ItemTemplate {
             default -> ChatColor.WHITE + _name;
         };
     }
+<<<<<<< Updated upstream:src/ItemTemplate.java
     public String[] GetBaseDescription(){
         //Todo: Add the upper part of description here (Armor, damage, speed, level)
         List<String> ret = new ArrayList<>();
@@ -95,12 +100,17 @@ public abstract class ItemTemplate {
 
 
         return (String[])ret.toArray();
+=======
+    private String[] GetBaseDescription(){
+        //Todo: Add the upper part of description here (Armor, damage, speed, name, level)
+        return null;
+>>>>>>> Stashed changes:src/WMItem.java
     }
-    public String[] GetBaseStatsDescription(){
+    private String[] GetBaseStatsDescription(){
         //Todo: Add the middle part of description (Vitality, Power and such)
         return null;
     }
-    public String[] GetSecondaryStatsDescription(){
+    private String[] GetSecondaryStatsDescription(){
         //Todo: Add the bottom part of the description (Secondary stats)
         return null;
     }
@@ -123,11 +133,11 @@ public abstract class ItemTemplate {
 
     //STATIC
 
-    static List<ItemTemplate> Database = new ArrayList<>();
+    static List<WMItem> Database = new ArrayList<>();
     public static NamespacedKey ExtendedIDKey = new NamespacedKey(Warmachina.Main, "ExtendedID");
 
-    public static ItemTemplate Get(int id){
-        return Database.size() > id ? Database.get(id) : null;
+    public static WMItem Get(int id){
+        return Database.get(id);
     }
 
 }

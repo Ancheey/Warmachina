@@ -10,12 +10,10 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://G:/MCServer/Server/spigot-1.17.1.jar!/" />
+          <root url="jar://H:/Spigot/new/API/spigot-api-1.19.2-R0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://G:/MCServer/Server/spigot-1.17.1.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
