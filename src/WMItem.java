@@ -24,7 +24,7 @@ public abstract class WMItem implements INameHandler {
 
     Map<PlayerCard.Statistics, Integer> _Stats = new HashMap<>();
 
-    abstract void onUse(PlayerInteractEvent e); //Called when right clicked with the item in hand - designed for off-hands
+    abstract void onUse(PlayerInteractEvent e); //Called when right-clicked with the item in hand - designed for off-hands
     abstract void onHit(EntityDamageByEntityEvent e); //Called when the weapon/projectile hits the target
     abstract void onSwing(PlayerInteractEvent e); //Called when the weapon is swung or shot
     abstract void onStruck(EntityDamageByEntityEvent e); //Called when the owner of the item (must be equipped) is hit (Called before onHit() )
@@ -54,7 +54,7 @@ public abstract class WMItem implements INameHandler {
         _slot = slot;
         _Stats.putAll(stats);
 
-        if(slot == EquipmentSlot.Main && !_Stats.containsKey(PlayerCard.Statistics.AttackSpeed)){//it's a weapon and it didn't have it's weapon speed set
+        if(slot == EquipmentSlot.Main && !_Stats.containsKey(PlayerCard.Statistics.AttackSpeed)){//it's a weapon, and it didn't have its weapon speed set
             _Stats.put(PlayerCard.Statistics.AttackSpeed, 1); //One strike per second
         }
 
