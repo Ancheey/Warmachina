@@ -13,8 +13,6 @@ import java.util.Map;
 public abstract class WMItem implements INameHandler {
     
     int _itemID;
-    int a;
-    int b;
     String _name;
     Rarity _rarity;
     Material _base;
