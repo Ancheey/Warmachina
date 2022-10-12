@@ -21,8 +21,11 @@ public abstract class PlayerCard {
         BonusPhysicalDamage, //Flat Bonus damage dealt by a weapon swing
         BonusMagicDamage, //Flat Bonus damage dealt by magic effects and abilities
         BonusRangedDamage, //Flat Bonus damage dealt by a ranged attack
-
+        DamageDiceAmount, //Damage roll 1to DamageDiceAmount; modified at a rate of 1.05 per point
+        DamageDiceValue, //This value is added onto the damage roll; modified by power at a rate of 0.95 per point
+        AttackSpeed //Tis can be only set once, cannot be modified by stats and is required for weapons
     }
+
     //Used for random stat generations based on item lvl score
     public static final Map<Statistics, Float> StatWeights = new HashMap<>();
     static{
@@ -43,6 +46,8 @@ public abstract class PlayerCard {
         StatWeights.put(Statistics.BonusPhysicalDamage, 0.86f);
         StatWeights.put(Statistics.BonusMagicDamage, 0.86f);
         StatWeights.put(Statistics.BonusRangedDamage, 0.86f);
-
+        StatWeights.put(Statistics.DamageDiceAmount, 2.12f);
+        StatWeights.put(Statistics.DamageDiceValue, 0.96f);
     }
+
 }
