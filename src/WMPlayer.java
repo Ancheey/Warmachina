@@ -1,7 +1,44 @@
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class PlayerCard {
+public abstract class WMPlayer {
+
+    Map<Statistics,Integer> Stats;
+    Map<Statistics,Float> DynamicStatModifiers;
+
+    //ADD STATIC STAT MODIFIERS / BUFFS
+    Map<WMItem.EquipmentSlot, WMItem> Equipment;
+
+    public void Equip(WMItem item){
+        Equipment.put(item._slot,item);
+
+        //Adding stats
+        for ( Map.Entry<Statistics, Integer> entry :
+        item.GetAllStats().entrySet()) {
+            Stats.put(entry.getKey(),
+                    (
+                            Stats.containsKey(entry.getKey()) ?
+                                    Stats.get(entry.getKey()) + entry.getValue() :
+                                    entry.getValue()
+                    ));
+        }
+
+    }
+    public void Unequip(WMItem.EquipmentSlot slot){
+        WMItem item = Equipment.get(slot);
+        Equipment.put(slot, null);
+
+        for ( Map.Entry<Statistics, Integer> entry :
+                item.GetAllStats().entrySet()) {
+            Stats.put(entry.getKey(), Stats.get(entry.getKey()) - entry.getValue() );
+        }
+    }
+
+    public WMPlayer(){
+        Stats = new HashMap<>();
+        Equipment = new HashMap<>();
+    }
 
     public enum Statistics{
         Vitality, //Increases the value of players HP
