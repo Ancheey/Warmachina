@@ -3,7 +3,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +19,9 @@ public abstract class WMItem implements INameHandler {
 
     int _score = 0;
 
-    Map<PlayerCard.Statistics, Integer> _Stats = new HashMap<>();
+    Map<WMPlayer.Statistics, Integer> _Stats = new HashMap<>();
 
-    abstract void onUse(PlayerInteractEvent e); //Called when right clicked with the item in hand - designed for off-hands
+    abstract void onUse(PlayerInteractEvent e); //Called when right-clicked with the item in hand - designed for off-hands
     abstract void onHit(EntityDamageByEntityEvent e); //Called when the weapon/projectile hits the target
     abstract void onSwing(PlayerInteractEvent e); //Called when the weapon is swung or shot
     abstract void onStruck(EntityDamageByEntityEvent e); //Called when the owner of the item (must be equipped) is hit (Called before onHit() )
@@ -43,7 +42,7 @@ public abstract class WMItem implements INameHandler {
         Gem
     }
 
-    public WMItem(int ID, Material base, EquipmentSlot slot, String name, Rarity rarity, int score, Map<PlayerCard.Statistics, Integer> stats){
+    public WMItem(int ID, Material base, EquipmentSlot slot, String name, Rarity rarity, int score, Map<WMPlayer.Statistics, Integer> stats){
         _itemID = ID;
         _base = base;
         _score = score;
@@ -52,8 +51,8 @@ public abstract class WMItem implements INameHandler {
         _slot = slot;
         _Stats.putAll(stats);
 
-        if(slot == EquipmentSlot.Main && !_Stats.containsKey(PlayerCard.Statistics.AttackSpeed)){//it's a weapon and it didn't have it's weapon speed set
-            _Stats.put(PlayerCard.Statistics.AttackSpeed, 1); //One strike per second
+        if(slot == EquipmentSlot.Main && !_Stats.containsKey(WMPlayer.Statistics.AttackSpeed)){//it's a weapon and it didn't have it's weapon speed set
+            _Stats.put(WMPlayer.Statistics.AttackSpeed, 1); //One strike per second
         }
 
     }
@@ -81,13 +80,13 @@ public abstract class WMItem implements INameHandler {
             ret.add(ChatColor.YELLOW + "Gear Score: " + _score);
         }
         if (_slot == EquipmentSlot.Main) {
-            int val = GetStatValue(PlayerCard.Statistics.DamageDiceValue);
-            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount)) * val + ", " + GetStatValue(PlayerCard.Statistics.AttackSpeed) + " swings per second");
-            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount) / 2 + val) * GetStatValue(PlayerCard.Statistics.AttackSpeed) + " damage per second)");
+            int val = GetStatValue(WMPlayer.Statistics.DamageDiceValue);
+            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount)) * val + ", " + GetStatValue(WMPlayer.Statistics.AttackSpeed) + " swings per second");
+            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount) / 2 + val) * GetStatValue(WMPlayer.Statistics.AttackSpeed) + " damage per second)");
         } else if (_slot == EquipmentSlot.Ranged) {
-            int val = GetStatValue(PlayerCard.Statistics.DamageDiceValue);
-            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount)) * val);
-            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(PlayerCard.Statistics.DamageDiceAmount) / 2 + val) + " damage per shot)");
+            int val = GetStatValue(WMPlayer.Statistics.DamageDiceValue);
+            ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount)) * val);
+            ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount) / 2 + val) + " damage per shot)");
         }
         //TODO: Finish this for shields, off hands, gear and other items
 
@@ -109,13 +108,13 @@ public abstract class WMItem implements INameHandler {
     public Material GetMaterial(){
         return _base;
     }
-    public Map<PlayerCard.Statistics, Integer>  GetAllStats(){
+    public Map<WMPlayer.Statistics, Integer>  GetAllStats(){
         return _Stats;
     }
-    public int GetStatValue(PlayerCard.Statistics type){
+    public int GetStatValue(WMPlayer.Statistics type){
         return _Stats.getOrDefault(type, 0);
     }
-    public void AssignStat(PlayerCard.Statistics type, int amount){
+    public void AssignStat(WMPlayer.Statistics type, int amount){
         _Stats.put(type, amount);
     }
 
