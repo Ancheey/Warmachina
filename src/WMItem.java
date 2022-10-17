@@ -11,15 +11,15 @@ import java.util.Map;
 
 public abstract class WMItem implements INameHandler {
     
-    int _itemID;
-    String _name;
-    Rarity _rarity;
-    Material _base;
-    EquipmentSlot _slot;
+    private int itemID;
+    private String name;
+    private Rarity rarity;
+    private Material base;
+    private EquipmentSlot slot;
 
     int _score = 0;
 
-    Map<WMPlayer.Statistics, Integer> _Stats = new HashMap<>();
+    Map<WMPlayer.Statistics, Integer> Stats = new HashMap<>();
 
     abstract void onUse(PlayerInteractEvent e); //Called when right-clicked with the item in hand - designed for off-hands
     abstract void onHit(EntityDamageByEntityEvent e); //Called when the weapon/projectile hits the target
@@ -43,33 +43,33 @@ public abstract class WMItem implements INameHandler {
     }
 
     public WMItem(int ID, Material base, EquipmentSlot slot, String name, Rarity rarity, int score, Map<WMPlayer.Statistics, Integer> stats){
-        _itemID = ID;
-        _base = base;
+        itemID = ID;
+        this.base = base;
         _score = score;
-        _name = name;
-        _rarity = rarity;
-        _slot = slot;
-        _Stats.putAll(stats);
+        this.name = name;
+        this.rarity = rarity;
+        this.slot = slot;
+        Stats.putAll(stats);
 
-        if(slot == EquipmentSlot.Main && !_Stats.containsKey(WMPlayer.Statistics.AttackSpeed)){//it's a weapon and it didn't have it's weapon speed set
-            _Stats.put(WMPlayer.Statistics.AttackSpeed, 1); //One strike per second
+        if(slot == EquipmentSlot.Main && !Stats.containsKey(WMPlayer.Statistics.AttackSpeed)){//it's a weapon and it didn't have it's weapon speed set
+            Stats.put(WMPlayer.Statistics.AttackSpeed, 1); //One strike per second
         }
 
     }
     public WMItem(int ID, Material base, String name, Rarity rarity){
-        _itemID = ID;
-        _base = base;
-        _name = name;
-        _rarity = rarity;
-        _slot = EquipmentSlot.None;
+        itemID = ID;
+        this.base = base;
+        this.name = name;
+        this.rarity = rarity;
+        slot = EquipmentSlot.None;
     }
     public String GetName(){
-        return switch (_rarity) {
-            case Uncommon -> ChatColor.LIGHT_PURPLE + _name;
-            case Rare -> ChatColor.GREEN + _name;
-            case Epic -> ChatColor.DARK_BLUE + _name;
-            case Legendary -> ChatColor.DARK_PURPLE + _name;
-            default -> ChatColor.WHITE + _name;
+        return switch (rarity) {
+            case Uncommon -> ChatColor.LIGHT_PURPLE + name;
+            case Rare -> ChatColor.GREEN + name;
+            case Epic -> ChatColor.DARK_BLUE + name;
+            case Legendary -> ChatColor.DARK_PURPLE + name;
+            default -> ChatColor.WHITE + name;
         };
     }
     public String[] GetBaseDescription() {
@@ -79,11 +79,11 @@ public abstract class WMItem implements INameHandler {
         if (_score != 0) {
             ret.add(ChatColor.YELLOW + "Gear Score: " + _score);
         }
-        if (_slot == EquipmentSlot.Main) {
+        if (slot == EquipmentSlot.Main) {
             int val = GetStatValue(WMPlayer.Statistics.DamageDiceValue);
             ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount)) * val + ", " + GetStatValue(WMPlayer.Statistics.AttackSpeed) + " swings per second");
             ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount) / 2 + val) * GetStatValue(WMPlayer.Statistics.AttackSpeed) + " damage per second)");
-        } else if (_slot == EquipmentSlot.Ranged) {
+        } else if (slot == EquipmentSlot.Ranged) {
             int val = GetStatValue(WMPlayer.Statistics.DamageDiceValue);
             ret.add(ChatColor.WHITE + "Damage: " + (1 + val) + " - " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount)) * val);
             ret.add(ChatColor.WHITE + "( Avg " + (GetStatValue(WMPlayer.Statistics.DamageDiceAmount) / 2 + val) + " damage per shot)");
@@ -103,23 +103,26 @@ public abstract class WMItem implements INameHandler {
     }
 
     public Rarity GetRarity(){
-        return _rarity;
+        return rarity;
     }
     public Material GetMaterial(){
-        return _base;
+        return base;
     }
     public Map<WMPlayer.Statistics, Integer>  GetAllStats(){
-        return _Stats;
+        return Stats;
     }
     public int GetStatValue(WMPlayer.Statistics type){
-        return _Stats.getOrDefault(type, 0);
+        return Stats.getOrDefault(type, 0);
+    }
+    public EquipmentSlot GetSlot(){
+        return slot;
     }
     public void AssignStat(WMPlayer.Statistics type, int amount){
-        _Stats.put(type, amount);
+        Stats.put(type, amount);
     }
 
     //STATIC
-
+    // TODO: Remake database into an ItemManager
     static List<WMItem> Database = new ArrayList<>();
     public static NamespacedKey ExtendedIDKey = new NamespacedKey(Warmachina.Main, "ExtendedID");
 

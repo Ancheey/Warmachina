@@ -1,4 +1,3 @@
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ public abstract class WMPlayer {
     Map<WMItem.EquipmentSlot, WMItem> Equipment;
 
     public void Equip(WMItem item){
-        Equipment.put(item._slot,item);
+        Equipment.put(item.GetSlot(),item);
 
         //Adding stats
         for ( Map.Entry<Statistics, Integer> entry :
